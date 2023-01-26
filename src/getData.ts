@@ -37,14 +37,17 @@ const findJSON = (
         utils.cutAfterJS(`${prependJSON}${jsonStr}`)
     );
 };
-export default async function(url:string){
+export default async function (url: string) {
     const res = await axios(url);
-    return findJSON(
-        "watch.html",
-        "response",
-        res.data,
-        /\bytInitialData("\])?\s*=\s*\{/i,
-        "</script>",
-        "{"
-    );
+    return {
+        res,
+        data: findJSON(
+            "watch.html",
+            "response",
+            res.data,
+            /\bytInitialData("\])?\s*=\s*\{/i,
+            "</script>",
+            "{"
+        ),
+    };
 }

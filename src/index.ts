@@ -14,13 +14,13 @@ export type ReturnedData={
         isPlayable: boolean;
     }[];
 }
-function getContent(data: any): any[] {
+export function getContent(data: any): any[] {
     return data.contents.twoColumnBrowseResultsRenderer.tabs[0].tabRenderer
         .content.sectionListRenderer.contents[0].itemSectionRenderer.contents[0]
         .playlistVideoListRenderer.contents;
 }
-function parseInfo(content: any[]) {
-    return content.map((data) => {
+export function parseInfo(content: any[]) {
+    return content.filter((data)=>data.playlistVideoRenderer).map((data) => {
         data = data.playlistVideoRenderer;
         const videoId: string = data.videoId;
         const thumbnails: {
@@ -35,7 +35,7 @@ function parseInfo(content: any[]) {
     });
 }
 export default async (url: string):Promise<ReturnedData> => {
-    const data=await getData(url)
+    const {res,data}=await getData(url)
     const header:string = data.metadata.playlistMetadataRenderer.title;
     const contents = getContent(data);
     console.log(contents);
