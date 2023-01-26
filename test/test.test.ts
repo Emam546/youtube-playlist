@@ -19,7 +19,9 @@ describe("init response", () => {
     };
     let data: ReturnedData;
     beforeAll(async () => {
-        data = await m(url);
+        const res = await m(url);
+        if (!res) return;
+        data = res;
         fs.writeFileSync(
             path.join(__dirname, "./res.json"),
             JSON.stringify(data)
