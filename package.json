@@ -1,12 +1,13 @@
 {
   "name": "youtube-playlists-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple Library fro getting playlist videos from youtube",
   "repository": {
       "url": "https://github.com/Emam546/youtube-playlist.git",
       "type": "git"
   },
   "main":"dist/index.js",
+  "types": "dis/index.d.ts",
   "files": [
     "dist"
   ],
