@@ -1,8 +1,11 @@
-import m, { ReturnedData, getContent, parseInfo } from "../src";
+import m, { ReturnedData, getContent, parseInfo } from "../src/main";
+import getData from "../src/getData";
 import findData from "../src/getData";
 import fs from "fs";
 import path from "path";
-
+function WriteData(data: any) {
+    fs.writeFileSync(path.join(__dirname, "res.json"), JSON.stringify(data));
+}
 describe("init response", () => {
     const url =
         "https://www.youtube.com/playlist?list=PLWKjhJtqVAbnZtkAI3BqcYxKnfWn_C704";
@@ -61,4 +64,28 @@ describe("findData", () => {
         expect(content).toBeInstanceOf(Array);
         expect(() => parseInfo(content)).not.toThrow(Error);
     });
+    test("case 2", async () => {
+        const url =
+            "https://www.youtube.com/playlist?list=PLy1bC-662HHKXOVHInxvhSRReDz0d4xCI";
+        const json = await findData(url);
+        expect(() => getContent(json.data)).not.toThrow(Error);
+        const content = getContent(json.data);
+        expect(content).not.toBeUndefined();
+        expect(content).toBeInstanceOf(Array);
+        expect(() => parseInfo(content)).not.toThrow(Error);
+        const res = await m(url);
+        expect(res).not.toBeNull();
+    });
+    test("test many cases",async()=>{
+        const links=[
+            "https://www.youtube.com/playlist?list=PLME9drm1zCz9qnG8Jr_IFgyDT17IQHrd0",
+            "https://www.youtube.com/playlist?list=PLyORnIW1xT6zC14Z45V6c00JFwRBWdh8P",
+            "https://www.youtube.com/playlist?list=PLDoPjvoNmBAw_t_XWUFbBX-c9MafPk9ji",
+        ]
+        await Promise.all(links.map(async(url)=>{
+            const res = await m(url);
+            expect(res).not.toBeNull();
+        }))
+    })
 });
+

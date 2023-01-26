@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as utils from "./utils";
-import { searchEle } from "./utils";
+import { type searchEle } from "./utils";
 const jsonClosingChars = /^[)\]}'\s]+/;
 const parseJSON = (source: string, varName: string, json: string) => {
     if (!json || typeof json === "object") {
@@ -27,7 +27,7 @@ const findJSON = (
     right: string,
     prependJSON: string
 ) => {
-    let jsonStr = utils.between(body, left, right);
+    const jsonStr = utils.between(body, left, right);
     if (!jsonStr) {
         throw Error(`Could not find ${varName} in ${source}`);
     }

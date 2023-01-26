@@ -53,7 +53,7 @@ const parseJSON = (source, varName, json) => {
     }
 };
 const findJSON = (source, varName, body, left, right, prependJSON) => {
-    let jsonStr = utils.between(body, left, right);
+    const jsonStr = utils.between(body, left, right);
     if (!jsonStr) {
         throw Error(`Could not find ${varName} in ${source}`);
     }
